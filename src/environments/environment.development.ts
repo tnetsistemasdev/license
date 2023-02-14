@@ -1,0 +1,7 @@
+export const environment = {
+  production:false,
+  API:"http://localhost:8000",
+  PUBLIC_KEY_MERCADO_PAGO:"TEST-2933d05d-f7db-4314-965d-d357ede0e2a4",
+  PRIVATE_KEY_MERCADO_PAGO:"TEST-7556539437803713-122811-230b67d46f21326f504c88a367ec0a51-645857956",
+
+};

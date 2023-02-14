@@ -1,0 +1,20 @@
+<div class="row row-cols-1 row-cols-md-3 mb-3 text-center mt-md-5">
+  <div *ngFor="let product of products" class="col">
+    <div class="card mb-4 rounded-3 shadow-sm">
+      <div class="card-header py-3">
+        <h4 class="my-0 fw-normal">{{product.name}}</h4>
+      </div>
+      <div class="card-body">
+        <h1 class="card-title pricing-card-title">R$ {{product.selling_price.replace('.', ',')}}
+          <small class="text-muted fw-light" *ngIf="product.unit=='UNID'; else display_unit">DIA</small></h1>
+        <ng-template #display_unit>
+          <small class="text-muted fw-light" *ngIf="product.unit=='UNID'; else display_unit">DIA</small>
+        </ng-template>
+        <ul class="list-unstyled mt-3 mb-4">
+          <li>20 users included</li>
+        </ul>
+        <button type="button" class="w-100 btn btn-lg btn-primary">Get started</button>
+      </div>
+    </div>
+  </div>
+</div>
