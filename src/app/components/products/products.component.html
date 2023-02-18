@@ -1,20 +1,52 @@
-<div class="row row-cols-1 row-cols-md-3 mb-3 text-center mt-md-5">
-  <div *ngFor="let product of products" class="col">
-    <div class="card mb-4 rounded-3 shadow-sm">
-      <div class="card-header py-3">
-        <h4 class="my-0 fw-normal">{{product.name}}</h4>
-      </div>
-      <div class="card-body">
-        <h1 class="card-title pricing-card-title">R$ {{product.selling_price.replace('.', ',')}}
-          <small class="text-muted fw-light" *ngIf="product.unit=='UNID'; else display_unit">DIA</small></h1>
-        <ng-template #display_unit>
-          <small class="text-muted fw-light" *ngIf="product.unit=='UNID'; else display_unit">DIA</small>
-        </ng-template>
-        <ul class="list-unstyled mt-3 mb-4">
-          <li>20 users included</li>
-        </ul>
-        <button type="button" class="w-100 btn btn-lg btn-primary">Get started</button>
+<div class="container">
+  <app-alert [message]="message" [title]="title" [tipo]="tipo"> ></app-alert>
+  <div class="row row-cols-1 row-cols-md-3 mb-3 text-center mt-md-5">
+    <div *ngFor="let product of products" class="col">
+      <div class="card mb-4 rounded-3 shadow-sm">
+        <div class="card-header py-3">
+          <h4 class="my-0 fw-normal">{{product.name}}</h4>
+        </div>
+        <div class="card-body">
+          <h1 class="card-title pricing-card-title">R$ {{product.selling_price.replace('.', ',')}}
+            <small class="text-muted fw-light" *ngIf="product.unit=='UNID'; else display_unit">DIA</small></h1>
+          <ng-template #display_unit>
+            <small class="text-muted fw-light">{{product.unit}}</small>
+          </ng-template>
+          <ul class="list-unstyled mt-3 mb-4">
+            <li [innerHTML]="product.product_description">
+            </li>
+          </ul>
+          <div *ngIf="product.selling_price==0.00">
+            <button (click)="liberar(product.unit,product.product_id)" type="button"
+                    class="w-30 btn btn-md btn-primary">
+              Adquirir
+            </button>
+          </div>
+          <div *ngIf="product.selling_price>0.00">
+            <button type="button" (click)="openModalWithComponent('card-modal')"
+                    class=" m-1 btn btn-md btn-primary">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                   class="bi bi-credit-card-2-back-fill" viewBox="0 0 16 16">
+                <path
+                  d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v5H0V4zm11.5 1a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h2a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-2zM0 11v1a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-1H0z"/>
+              </svg>
+              Cartão
+            </button>
+            <button type="button" (click)="openModalWithComponent('pix-modal')" id="pix"
+                    class="m-1 btn btn-md btn-primary"
+            >
+              <svg style="color: white; height: 15px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                <!--! Font Awesome Pro 6.2.1 by @fontawesome  - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+                <path fill="white"
+                      d="M242.4 292.5C247.8 287.1 257.1 287.1 262.5 292.5L339.5 369.5C353.7 383.7 372.6 391.5 392.6 391.5H407.7L310.6 488.6C280.3 518.1 231.1 518.1 200.8 488.6L103.3 391.2H112.6C132.6 391.2 151.5 383.4 165.7 369.2L242.4 292.5zM262.5 218.9C256.1 224.4 247.9 224.5 242.4 218.9L165.7 142.2C151.5 127.1 132.6 120.2 112.6 120.2H103.3L200.7 22.76C231.1-7.586 280.3-7.586 310.6 22.76L407.8 119.9H392.6C372.6 119.9 353.7 127.7 339.5 141.9L262.5 218.9zM112.6 142.7C126.4 142.7 139.1 148.3 149.7 158.1L226.4 234.8C233.6 241.1 243 245.6 252.5 245.6C261.9 245.6 271.3 241.1 278.5 234.8L355.5 157.8C365.3 148.1 378.8 142.5 392.6 142.5H430.3L488.6 200.8C518.9 231.1 518.9 280.3 488.6 310.6L430.3 368.9H392.6C378.8 368.9 365.3 363.3 355.5 353.5L278.5 276.5C264.6 262.6 240.3 262.6 226.4 276.6L149.7 353.2C139.1 363 126.4 368.6 112.6 368.6H80.78L22.76 310.6C-7.586 280.3-7.586 231.1 22.76 200.8L80.78 142.7H112.6z"></path>
+              </svg>
+              PIX
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
+  <app-modal [pixModal]="pixModal" [cardModal]="cardModal"></app-modal>
 </div>
+

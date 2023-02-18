@@ -6,7 +6,8 @@
     "types": []
   },
   "files": [
-    "src/main.ts"
+    "src/main.ts",
+    "src/app/utils/mercado.class.ts"
   ],
   "include": [
     "src/**/*.d.ts"

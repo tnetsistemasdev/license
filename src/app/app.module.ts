@@ -8,6 +8,12 @@ import { PaymentsComponent } from './components/payments/payments.component';
 import { ProductsComponent } from './components/products/products.component';
 import { ClientsComponent } from './components/clients/clients.component';
 import { LoginComponent } from './components/login/login.component';
+import { ModalComponent } from './components/widgets/modal/modal.component';
+import {AlertModule} from "ngx-bootstrap/alert";
+import { AlertComponent } from './components/widgets/alert/alert.component';
+import { NotFountComponent } from './components/errors/not-fount/not-fount.component';
+import { RegisterComponent } from './components/register/register/register.component';
+import { ToastrModule } from 'ngx-toastr';
 
 
 @NgModule({
@@ -16,12 +22,18 @@ import { LoginComponent } from './components/login/login.component';
     PaymentsComponent,
     ProductsComponent,
     ClientsComponent,
-    LoginComponent
+    LoginComponent,
+    ModalComponent,
+    AlertComponent,
+    NotFountComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    AlertModule,
+    ToastrModule.forRoot(),
 
   ],
   providers: [],

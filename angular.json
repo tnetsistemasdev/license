@@ -25,11 +25,20 @@
               "src/assets"
             ],
             "styles": [
+              "styles.scss",
+              "node_modules/ngx-toastr/toastr.css",
               "./node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
               "./node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              {
+              "input": "./node_modules/toastr/toastr.js",
+              "inject": false,
+              "bundleName": "toastr"
+              }
+
+            ]
           },
           "configurations": {
             "production": {
