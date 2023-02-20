@@ -1,0 +1,41 @@
+.container{
+  padding:40px;
+}
+.description{
+  height: 100px;
+  overflow-y: scroll;
+}
+
+.background-display {
+  background-color: #0d6efd;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+}
+
+.contact_name {
+  color: #fff;
+
+}
+.saudacao{
+  color: #fff;
+}
+
+@keyframes typewriter {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 50%;
+  }
+}
+
+@keyframes blink {
+  from {
+    border-color: #fff;
+  }
+  to {
+    border-color: transparent;
+  }
+
+}

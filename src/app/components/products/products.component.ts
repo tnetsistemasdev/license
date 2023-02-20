@@ -4,6 +4,8 @@ import {environment} from "../../../environments/environment";
 import {ActivatedRoute} from "@angular/router";
 import {ScriptsService} from "../../services/js/scripts.service";
 import {MercadoPago} from "../../utils/mercado.class";
+import {ToastrService} from "ngx-toastr";
+
 
 
 // import {AlertComponent} from "../widgets/alert/alert.component";
@@ -26,9 +28,10 @@ export class ProductsComponent implements OnInit {
   title: string = "";
 
   mercadoPago: any = {}
+   contactNome: string = "";
 
 
-  constructor(private axios: AxiosService, private route: ActivatedRoute, private script: ScriptsService) {
+  constructor(private axios: AxiosService, private route: ActivatedRoute, private script: ScriptsService,private toastr: ToastrService) {
     //adquire o id do contato
     this.contact_id = this.route.snapshot.paramMap.get('contact_id');
 
@@ -42,12 +45,14 @@ export class ProductsComponent implements OnInit {
       if (response.data.id == null || response.data.id == undefined || response.data.id == "") {
         window.location.href = "/not-found/O contato não existe: " + this.contact_id
       }
+      this.contactNome = response.data.name;
     }).catch((error) => {
       console.log(error);
     });
 
     //define em caso de sucesso para onde o mesmo se reincaminhara
-    this.location = this.route.snapshot.paramMap.get('redirect');
+    this.location = atob(<string>this.route.snapshot.paramMap.get('redirect'));
+
 
   }
 
@@ -55,10 +60,10 @@ export class ProductsComponent implements OnInit {
     //lista os produtos conforme o sistema
     this.axios.post(environment.API + '/api/v2/products', {
       "search": "1",
-      "columns": ["is_service"]
+      "columns": ["is_service"],
+      "category": this.route.snapshot.paramMap.get('redirect')
     }, {
       "token": "ZmluYW5jZWlyby0wMTpDZXJ0aWZpY2FkbzEyMw==",
-      "origin": "spc.localhost:8765",
       "Content-Type": "application/json; charset=UTF-8"
     }).then((response) => {
       this.products = response.data;
@@ -109,20 +114,19 @@ export class ProductsComponent implements OnInit {
       "Content-Type": "application/json"
     }).then((response) => {
       if (response.data.success) {
-        this.title = 'Sucesso'
-        this.message = 'A licença foi emitida com sucesso'
-        this.tipo = 'success'
+     this.toastr.success('Licença emitida com sucesso');
         setTimeout(function () {
         }, 5000);
         if (this.location != null) {
-          window.location.href = 'https://' + this.location;
+          window.location.href = this.location;
         }
       } else {
-        alert('Erro ao liberar');
+        this.toastr.error(response.data.message);
         console.log(response);
       }
     }).catch((error) => {
       console.log(error);
+      this.toastr.error(error.response.data.message);
     });
   }
 
