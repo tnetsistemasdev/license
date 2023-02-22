@@ -1,7 +1,7 @@
 export const environment = {
-  production:false,
-  API:"http://localhost:8000",
-  PUBLIC_KEY_MERCADO_PAGO:"TEST-2933d05d-f7db-4314-965d-d357ede0e2a4",
-  PRIVATE_KEY_MERCADO_PAGO:"TEST-7556539437803713-122811-230b67d46f21326f504c88a367ec0a51-645857956",
-
+  production: false,
+  API: "http://localhost:8000",
+  PUBLIC_KEY_MERCADO_PAGO: "TEST-1bf00641-345e-4a31-b990-e784860e31b3",
+  PRIVATE_KEY_MERCADO_PAGO: "TEST-6594797941829024-102818-4b60ebc6de5d4f33df4bddf0650eae46-178658791",
+  URL_SYSTEM: "http://spc.localhost:8765"
 };

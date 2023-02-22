@@ -1,0 +1,20 @@
+#form-checkout {
+  display: flex;
+  flex-direction: column;
+
+}
+
+.container {
+  height: 18px;
+  display: inline-block;
+  border: 1px solid rgb(118, 118, 118);
+  border-radius: 2px;
+  padding: 1px 2px;
+}
+.form-control{
+  height:40px;
+  margin: 10px;
+}
+#form-checkout__submit{
+  margin-top: 20px;
+}

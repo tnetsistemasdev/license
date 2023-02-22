@@ -1,103 +1,62 @@
-
-<div class="row">
-  <div class="col-md-12">
-    <div class="card">
-      <div class="card-header">
-        <div class="row">
-          <div class="col-md-8 p-3">
-            <h3>Assinar Agora</h3>
+<div class="card">
+  <div class="card-body">
+    <form id="form-checkout">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group">
+            <div id="form-checkout__cardNumber" class="form-control"></div>
           </div>
-          <div class="col-md-4">
-            <img class="float-md-end tnet-logo p-1"
-                 width="120"
-                 src="https://tnetsistemas.com.br/images/logo%20lar1.png">
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <div id="form-checkout__expirationDate" class="form-control"></div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <div id="form-checkout__securityCode" class="form-control"></div>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="form-group">
+            <input type="text" class="form-control" id="form-checkout__cardholderName"/>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <select id="form-checkout__issuer" class="form-control"></select>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <select id="form-checkout__installments" class="form-control"></select>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <select id="form-checkout__identificationType" class="form-control"></select>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <input class="form-control" type="text" id="form-checkout__identificationNumber"/>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <input type="email" id="form-checkout__cardholderEmail" class="form-control">
           </div>
         </div>
 
-
       </div>
-      <div class="card-body">
-        <form action="/process_payment" id="paymentForm" method="post">
+      <button type="submit" formaction="form-checkout" class="btn btn-primary" id="form-checkout__submit">
+        Realizar Pagamento
+        <strong id="loading-spinner" class="d-none">
+          <i class="fas fa-circle-notch fa-spin rapid-spin"> </i>
+        </strong>
+      </button>
 
-
-          <h5 class="mt-5">Detalhes do cartão</h5>
-          <div class="row">
-            <div class="col-md-6 p-3">
-              <label for="cardholderName">Titular do cartão</label>
-              <input class="form-control" data-checkout="cardholderName" id="cardholderName" type="text">
-            </div>
-            <div class="col-md-6 p-3">
-              <label for="cardExpirationMonth">Data de vencimento</label>
-              <div class="input-group">
-                <input class="form-control" autocomplete=off data-checkout="cardExpirationMonth"
-                       id="cardExpirationMonth"
-                       oncopy="return false"
-                       oncut="return false" ondrag="return false"
-                       ondrop="return false" onpaste="return false"
-                       onselectstart="return false" placeholder="MM" type="text">
-                <span class="input-group-text date-separator">/</span>
-                <input class="form-control" autocomplete=off data-checkout="cardExpirationYear"
-                       id="cardExpirationYear"
-                       oncopy="return false"
-                       oncut="return false" ondrag="return false"
-                       ondrop="return false" onpaste="return false"
-                       onselectstart="return false" placeholder="YY" type="text">
-              </div>
-            </div>
-            <div class="col-md-6  p-3">
-              <label for="cardNumber">Número do cartão</label>
-              <input class="form-control" autocomplete=off data-checkout="cardNumber" id="cardNumber"
-                     oncopy="return false" oncut="return false"
-                     ondrag="return false" ondrop="return false"
-                     onpaste="return false" onselectstart="return false" type="text">
-            </div>
-            <div class="col-md-6  p-3">
-              <label for="securityCode">Código de segurança</label>
-              <input class="form-control" autocomplete=off data-checkout="securityCode" id="securityCode"
-                     oncopy="return false" oncut="return false"
-                     ondrag="return false" ondrop="return false"
-                     onpaste="return false" onselectstart="return false" type="text">
-            </div>
-            <div class="col-md-6  p-3" id="issuerInput">
-              <label for="issuer">Banco emissor</label>
-              <select class="form-select" data-checkout="issuer" id="issuer" name="issuer"></select>
-            </div>
-            <div class="col-md-6  p-3">
-              <label for="installments">Parcelas</label>
-              <select class="form-select" id="installments" name="installments" type="text"></select>
-            </div>
-
-          </div>
-          <h5>Titular do Cartão</h5>
-          <div>
-            <div class="row">
-              <div class="col-md-6 p-3">
-                <label for="email">E-mail</label>
-                <input class="form-control" id="email" name="email" type="text" placeholder="test@test.com"/>
-              </div>
-              <div class="col-md-6 p-3">
-                <label for="docType">Tipo de documento</label>
-                <select class="form-select" data-checkout="docType" id="docType" name="docType" type="text"></select>
-              </div>
-              <div class="col-md-6 p-3">
-                <label for="docNumber">Número do documento</label>
-                <input class="form-control" data-checkout="docNumber" id="docNumber" name="docNumber" type="text"/>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6  p-3">
-            <input id="transactionAmount" name="transactionAmount" type="hidden" value="100"/>
-            <input id="paymentMethodId" name="paymentMethodId" type="hidden"/>
-            <input id="description" name="description" type="hidden"/>
-            <br>
-            <button class="btn btn-primary" type="submit">Realizar Pagamento</button>
-            <br>
-          </div>
-        </form>
-      </div>
-    </div>
-
+    </form>
   </div>
 </div>
-
 

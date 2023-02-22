@@ -8,12 +8,21 @@
        <h3 class="saudacao"> Fique a vontade para escolher um de nossos planos!</h3>
 
     </div>
+    <input type="hidden" id="api_host" value="{{api_host}}">
+    <input type="hidden" id="amount" >
+    <input type="hidden" id="public_key" >
+    <input type="hidden" id="private_key" value="{{private_key}}">
+    <input type="hidden" id="product"  >
+    <input type="hidden" id="url_system"  >
+    <input type="hidden" id="user" value="{{user}}">
+
   </div>
   <div class="row row-cols-1 row-cols-md-3 mb-3 text-center mt-md-5">
     <div *ngFor="let product of products" class="col">
       <div class="card mb-4 rounded-3 shadow-sm" style="height: 337px">
         <div class="card-header py-3">
           <h4 class="my-0 fw-normal">{{product.name}}</h4>
+
         </div>
         <div class="card-body">
           <h4 class="card-title pricing-card-title">R$ {{product.selling_price.replace('.', ',')}}
@@ -32,7 +41,7 @@
             </button>
           </div>
           <div *ngIf="product.selling_price>0.00">
-            <button type="button" (click)="openModalWithComponent('card-modal')"
+            <button type="button" (click)="openModalWithComponent('card-modal',public_key,product)"
                     class=" m-1 btn btn-md btn-primary">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                    class="bi bi-credit-card-2-back-fill" viewBox="0 0 16 16">
@@ -41,7 +50,7 @@
               </svg>
               Cartão
             </button>
-            <button type="button" (click)="openModalWithComponent('pix-modal')" id="pix"
+            <button type="button" (click)="openModalWithComponent('pix-modal',public_key,product)" id="startPix"
                     class="m-1 btn btn-md btn-primary"
             >
               <svg style="color: white; height: 15px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
