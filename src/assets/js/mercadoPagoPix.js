@@ -102,7 +102,7 @@ setTimeout(() => {
 
 
           if (reponsePayments.status == 'approved') {
-            liberarLicencaPix(product.unit,product.product_id,contact.id)
+            liberarLicencaPix(product.unit,product.product_id,user.id)
 
             clearInterval(intervaloEscuta);
 
