@@ -51,7 +51,7 @@ export class RegisterComponent {
     if (email != "" && email != null) {
 
       //verifica se o email é unico
-      this.axios.post(this.routeLogin + 'api/v2/unique', {email: email}, {
+      this.axios.post(this.routeLogin + '/api/v2/unique', {email: email}, {
         "Content-Type": "application/json; charset=UTF-8"
       }).then((response) => {
 
@@ -125,7 +125,7 @@ export class RegisterComponent {
               "Content-Type": "application/json; charset=UTF-8"
             }).then((response) => {
             if (response.data.success) {
-              axios.post(this.routeLogin + 'api/v2/users/store',
+              axios.post(this.routeLogin + '/api/v2/users/store',
                 {
                   nome: nome,
                   email: email,
