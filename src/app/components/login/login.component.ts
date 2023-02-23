@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {AxiosService} from "../../services/axios.service";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-login',
@@ -12,7 +13,7 @@ export class LoginComponent {
   routeLogin: string | null = "";
   criptrouteLogin: string | null = "";
 
-  constructor(private route: ActivatedRoute, private axios: AxiosService) {
+  constructor(private route: ActivatedRoute, private axios: AxiosService, private toastr: ToastrService) {
 
     this.title = this.route.snapshot.paramMap.get('aplication')
     this.routeLogin = this.route.snapshot.paramMap.get('dominio');
@@ -49,6 +50,8 @@ export class LoginComponent {
           }
           let myForm = <HTMLFormElement>document.getElementById('loginForm');
           myForm.submit();
+        }else{
+          this.toastr.error(response.data.message);
         }
       }).catch(error => {
         console.log(error);
