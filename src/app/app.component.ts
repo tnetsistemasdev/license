@@ -17,15 +17,6 @@ export class AppComponent implements OnInit  {
 
   ngOnInit(): void {
 
-    document.addEventListener('click', (event)=>{
-
-
-        (document.getElementById('loading') as HTMLElement).classList.remove('d-none');
-        setTimeout(() => {
-          (document.getElementById('loading') as HTMLElement).classList.add('d-none');
-        }, 2000);
-
-    });
     setTimeout(()=>{
       (document.getElementById('loading') as HTMLElement).classList.add('d-none');
     },2000);
