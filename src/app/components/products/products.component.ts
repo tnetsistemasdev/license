@@ -61,12 +61,15 @@ export class ProductsComponent implements OnInit {
   }
 
   ngOnInit() {
-    (document.getElementById('url_system') as HTMLInputElement).value = environment.URL_SYSTEM ;
+    let redirect = this.route.snapshot.paramMap.get('redirect');
+    if (redirect != null) {
+      (document.getElementById('url_system') as HTMLInputElement).value = redirect;
+    }
     //lista os produtos conforme o sistema
     this.axios.post(environment.API + '/api/v2/products', {
       "search": "1",
       "columns": ["is_service"],
-      "category": this.route.snapshot.paramMap.get('redirect')
+      "category": redirect
     }, {
       "token": "ZmluYW5jZWlyby0wMTpDZXJ0aWZpY2FkbzEyMw==",
       "Content-Type": "application/json; charset=UTF-8"
