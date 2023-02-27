@@ -1,5 +1,4 @@
-
-setTimeout(()=>{
+setTimeout(() => {
   let public_key = document.getElementById('public_key').value;
   let amount = document.getElementById('amount').value;
   let product = JSON.parse(document.getElementById('product').value);
@@ -71,8 +70,8 @@ setTimeout(()=>{
           identificationType,
         } = cardForm.getCardFormData();
         let body = JSON.stringify({
-          contact_id:contact.id,
-          product_id:product.product_id,
+          contact_id: contact.id,
+          product_id: product.product_id,
           token,
           issuer_id,
           payment_method_id,
@@ -87,7 +86,7 @@ setTimeout(()=>{
             },
           },
         });
-        fetch(api_host_gestor+"/api/v2/subscription/pay-card", {
+        fetch(api_host_gestor + "/api/v2/subscription/pay-card", {
           method: "POST",
           headers: {
             "token": "ZmluYW5jZWlyby0wMTpDZXJ0aWZpY2FkbzEyMw==",
@@ -97,13 +96,13 @@ setTimeout(()=>{
         }).then(result => result.json())
           .then((response) => {
             if (response.success == 1) {
-              liberarLicencaCard(product.unit,product.product_id,contact.id)
+              liberarLicencaCard(product.unit, product.product_id, contact.id)
 
-            }else{
+            } else {
               alert(response.message);
             }
-          }).catch(function (error){
-            console.log(error);
+          }).catch(function (error) {
+          console.log(error);
         })
       },
       onFetching: (resource) => {
@@ -111,12 +110,13 @@ setTimeout(()=>{
       }
     },
   });
-},1500);
+}, 1500);
 
-function liberarLicencaCard(unidade, product_id,contact_id) {
+function liberarLicencaCard(unidade, product_id, contact_id) {
   let api_host_gestor = document.getElementById('api_host').value;
   let days = 0;
-  if (unidade == 'UNID' || unidade == 'DIA') {
+  let number_units = 0;
+  if (unidade == 'DIA') {
     days = 1;
   } else if (unidade == 'SEMANA') {
     days = 7;
@@ -129,12 +129,14 @@ function liberarLicencaCard(unidade, product_id,contact_id) {
   } else if (unidade == 'VITAL') {
     days = 36500;
   } else {
-    console.log('UNIDADE INVALIDA');
+    number_units = 1;
   }
+
   let body = JSON.stringify({
     "contact_id": contact_id,
     "product_id": product_id,
-    "days": days
+    "days": days,
+    "number_units": number_units
   });
   fetch(api_host_gestor + '/api/v2/license/create', {
     body: body,
@@ -142,17 +144,42 @@ function liberarLicencaCard(unidade, product_id,contact_id) {
       "token": "ZmluYW5jZWlyby0wMTpDZXJ0aWZpY2FkbzEyMw==",
       "Content-Type": "application/json; charset=UTF-8"
     },
-    method:"POST"
-  }) .then(result => result.json())
+    method: "POST"
+  }).then(result => result.json())
     .then((response) => {
-    if (response.success) {
-      alert('Pagamento Realizado');
-      window.location.href = document.getElementById('url_system').value;
-    } else {
-      alert(response.message);
-      console.log(response);
+      if (response.success) {
+        if (days > 0) {
+          alert('Pagamento Realizado');
+          window.location.href = document.getElementById('url_system').value;
+        } else if (number_units == 1) {
+          let body = JSON.stringify({
+            "contact_id": this.contact_id,
+            "product_id": product_id
+          });
+          fetch(this.location + '/api/v2/webhook', {
+            body: body, headers: {
+              "token": "ZmluYW5jZWlyby0wMTpDZXJ0aWZpY2FkbzEyMw==",
+              "Content-Type": "application/json"
+            }}).then(result => result.json())
+            .then((response) => {
+              if (response.success == true) {
+                window.history.back();
+              } else {
+                this.toastr.error(response.message);
+                console.log(response);
+              }
+
+            });
+
+
+        }
+        } else {
+          alert(response.message);
+          console.log(response);
+        }
+      }
+    ).
+      catch((error) => {
+        console.log(error);
+      });
     }
-  }).catch((error) => {
-    console.log(error);
-  });
-}

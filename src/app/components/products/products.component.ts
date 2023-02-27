@@ -29,7 +29,7 @@ export class ProductsComponent implements OnInit {
   api_host: string = "";
 
 
-  constructor(private axios: AxiosService, private route: ActivatedRoute, private script: ScriptsService, private toastr: ToastrService, private _renderer2: Renderer2,@Inject(DOCUMENT) private _document: Document) {
+  constructor(private axios: AxiosService, private route: ActivatedRoute, private script: ScriptsService, private toastr: ToastrService, private _renderer2: Renderer2, @Inject(DOCUMENT) private _document: Document) {
     this.public_key = environment.PUBLIC_KEY_MERCADO_PAGO;
     this.private_key = environment.PRIVATE_KEY_MERCADO_PAGO;
     this.api_host = environment.API;
@@ -102,9 +102,9 @@ export class ProductsComponent implements OnInit {
   }
 
   liberar(unidade: string, product_id: bigint) {
-
     let days = 0;
-    if (unidade == 'UNID' || unidade == 'DIA') {
+    let number_units = 0;
+    if (unidade == 'DIA') {
       days = 1;
     } else if (unidade == 'SEMANA') {
       days = 7;
@@ -117,21 +117,48 @@ export class ProductsComponent implements OnInit {
     } else if (unidade == 'VITAL') {
       days = 36500;
     } else {
-      console.log('UNIDADE INVALIDA');
+      number_units = 1;
     }
+
     this.axios.post(environment.API + '/api/v2/license/create', {
-      "contact_id": this.contact_id, "product_id": product_id, "days": days
+      "contact_id": this.contact_id,
+      "product_id": product_id,
+      "days": days,
+      "number_units": number_units
     }, {
       "token": "ZmluYW5jZWlyby0wMTpDZXJ0aWZpY2FkbzEyMw==",
       "Content-Type": "application/json"
     }).then((response) => {
+
       if (response.data.success) {
         this.toastr.success('Licença emitida com sucesso');
         setTimeout(function () {
         }, 5000);
-        if (this.location != null) {
-          window.location.href = this.location;
-        }
+          if(days>0 && this.location != null){
+
+            window.location.href = this.location;
+
+          }else if(number_units==1){
+
+          this.axios.post(this.location+'/api/v2/webhook', {
+            "contact_id": this.contact_id,
+            "product_id": product_id
+          }, {
+            "token": "ZmluYW5jZWlyby0wMTpDZXJ0aWZpY2FkbzEyMw==",
+            "Content-Type": "application/json"
+          })
+        .then((response)=> {
+            if(response.data.success == true){
+                window.history.back();
+            }else{
+              this.toastr.error(response.data.message);
+              console.log(response);
+            }
+
+          });
+          }
+
+
       } else {
         this.toastr.error(response.data.message);
         console.log(response);
@@ -140,6 +167,7 @@ export class ProductsComponent implements OnInit {
       console.log(error);
       this.toastr.error(error.response.data.message);
     });
+
   }
 
 
