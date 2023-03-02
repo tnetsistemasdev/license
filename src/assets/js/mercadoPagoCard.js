@@ -69,6 +69,7 @@ setTimeout(() => {
           identificationNumber,
           identificationType,
         } = cardForm.getCardFormData();
+
         let body = JSON.stringify({
           contact_id: contact.id,
           product_id: product.product_id,
@@ -100,9 +101,12 @@ setTimeout(() => {
 
             } else {
               alert(response.message);
+              habilitarButtonPagamento();
             }
           }).catch(function (error) {
           console.log(error);
+          alert('Houve um erro no servidor');
+          habilitarButtonPagamento();
         })
       },
       onFetching: (resource) => {
@@ -111,6 +115,12 @@ setTimeout(() => {
     },
   });
 }, 1500);
+
+function habilitarButtonPagamento() {
+  document.querySelector('#form-checkout__submit').removeAttribute('disabled');
+  document.querySelector('#loading-spinner').classList.add('d-none');
+  document.querySelector('#form-checkout__submit').classList.remove('disabled');
+}
 
 function liberarLicencaCard(unidade, product_id, contact_id) {
   let api_host_gestor = document.getElementById('api_host').value;
@@ -145,23 +155,34 @@ function liberarLicencaCard(unidade, product_id, contact_id) {
       "Content-Type": "application/json; charset=UTF-8"
     },
     method: "POST"
-  }).then(result => result.json())
-    .then((response) => {
+  }).then(result => result.json()).then((response) => {
       if (response.success) {
+        alert('Pagamento Realizado');
+        let location_app = atob(document.getElementById('url_system').value);
+        //se a cobrança for por tempos ele redireciona
         if (days > 0) {
-          alert('Pagamento Realizado');
-          window.location.href = document.getElementById('url_system').value;
-        } else if (number_units == 1) {
+
+          window.location.href = location_app;
+        }
+
+        //se for unidade
+          if (number_units == 1) {
+
           let body = JSON.stringify({
-            "contact_id": this.contact_id,
+            "contact_id": contact_id,
             "product_id": product_id
           });
-          fetch(this.location + '/api/v2/webhook', {
-            body: body, headers: {
+
+          fetch(location_app + '/api/v2/webhook', {
+            body: body,
+            headers: {
               "token": "ZmluYW5jZWlyby0wMTpDZXJ0aWZpY2FkbzEyMw==",
               "Content-Type": "application/json"
-            }}).then(result => result.json())
+            },
+            method: "POST"
+          }).then(result => result.json())
             .then((response) => {
+              console.log(response);
               if (response.success == true) {
                 window.history.back();
               } else {
@@ -173,13 +194,13 @@ function liberarLicencaCard(unidade, product_id, contact_id) {
 
 
         }
-        } else {
-          alert(response.message);
-          console.log(response);
-        }
+      } else {
+        alert(response.message);
+        habilitarButtonPagamento();
+        console.log(response);
       }
-    ).
-      catch((error) => {
-        console.log(error);
-      });
     }
+  ).catch((error) => {
+    console.log(error);
+  });
+}
