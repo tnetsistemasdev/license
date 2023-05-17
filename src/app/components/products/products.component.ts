@@ -16,6 +16,7 @@ export class ProductsComponent implements OnInit {
   products: any = [];
   pixModal: any = {};
   cardModal: any = {};
+  modalVisible: any = {};
   contact_id?: string | null = "";
   location?: string | null = "";
 
@@ -85,20 +86,36 @@ export class ProductsComponent implements OnInit {
   }
 
   openModalWithComponent(template: string, public_key: string, product: any) {
+    (document.getElementById('loading-modal') as HTMLElement).classList.remove('d-none');
+    this.modalVisible = {
+      'display': 'block',
+    }
+
     let amount: string = product.selling_price
+
     if (template == 'pix-modal') {
       this.displayPix(public_key, product);
       this.pixModal = {
         'display': 'block',
+      }
+      this.cardModal = {
+        'display': 'none',
       }
     } else if (template == 'card-modal') {
       this.displayCard(public_key, product);
       this.cardModal = {
         'display': 'block',
       }
+      this.displayPix(public_key, product);
+      this.pixModal = {
+        'display': 'none',
+      }
     } else {
       console.log('Erro na linha 37 de products components');
     }
+    setTimeout(function(){
+      (document.getElementById('loading-modal') as HTMLElement).classList.add('d-none');
+    },6000)
   }
 
   liberar(unidade: string, product_id: bigint) {
@@ -195,6 +212,8 @@ export class ProductsComponent implements OnInit {
 
     (document.getElementById('public_key') as HTMLInputElement).value = public_key;
     (document.getElementById('product') as HTMLInputElement).value = JSON.stringify(product);
+    (document.getElementById('qr-code-pix') as HTMLInputElement).src = "";
+    (document.getElementById('code-qr-code') as HTMLInputElement).value = "";
 
     let script = this._renderer2.createElement('script');
     script.src = 'https://sdk.mercadopago.com/js/v2';
