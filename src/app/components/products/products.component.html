@@ -3,9 +3,21 @@
   <app-alert [message]="message" [title]="title" [tipo]="tipo"> ></app-alert>
   <div class="row">
     <div class="col">
-      <h5 class="contact_name">Olá {{contactNome}}</h5>
+
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="97" height="55" viewBox="0 0 97 55" fill="none">
+            <rect width="97" height="55" fill="url(#pattern0)"/>
+            <defs>
+              <pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">
+                <use xlink:href="#image0_5_10" transform="scale(0.0103093 0.0181818)"/>
+              </pattern>
+              <image id="image0_5_10" width="97" height="55" xlink:href="data:image/png;base64,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"/>
+            </defs>
+          </svg>
+          <h3 class="contact_name text-center">Olá {{contactNome}}, fique a vontade para escolher um de nossos planos!</h3>
+
+
         <br>
-       <h3 class="saudacao"> Fique a vontade para escolher um de nossos planos!</h3>
+       <h3 class="saudacao"> </h3>
 
     </div>
     <input type="hidden" id="api_host" value="{{api_host}}">
@@ -18,21 +30,21 @@
 
   </div>
   <div class="row ">
-    <div *ngFor="let product of products" class="col-md-4 ">
-      <div class="card mb-4 rounded-3 shadow-sm" >
+    <div *ngFor="let product of products" class="col-md-4 " >
+      <div class="card mb-4 rounded-3 shadow-sm product-card " >
         <div class="card-header py-3">
-          <h4 class="my-0 fw-normal">{{product.name}}</h4>
+          <h1 class="my-0 fw-normal text-center">{{product.name}}</h1>
 
         </div>
         <div class="card-body">
-          <h4 class="card-title pricing-card-title">R$ {{product.selling_price.replace('.', ',')}}
-            <small class="text-muted fw-light">{{product.unit}}</small>
-         </h4>
-
           <ul class="list-unstyled mt-3 mb-4 description" >
             <li [innerHTML]="product.product_description">
             </li>
           </ul>
+          <h2 class="card-title pricing-card-title text-center">R$ {{product.selling_price.replace('.', ',')}}
+         </h2>
+
+
           <div *ngIf="product.selling_price==0.00">
             <button (click)="liberar(product.unit,product.product_id)" type="button"
                     class="w-30 btn btn-md btn-primary">
@@ -41,7 +53,7 @@
           </div>
 
         </div>
-        <div class="card-footer">
+        <div class="card-footer text-center">
           <div *ngIf="product.selling_price>0.00">
             <button type="button" (click)="openModalWithComponent('card-modal',public_key,product)"
                     class=" m-1 btn btn-md btn-primary">
