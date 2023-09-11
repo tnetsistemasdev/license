@@ -1,4 +1,4 @@
-function liberarLicencaPix(unit, product_id, contact_id) {
+function liberarLicencaPix(unidade, product_id, contact_id) {
   let api_host_gestor = document.getElementById('api_host').value;
   let days = 0;
   if (unidade == 'UNID' || unidade == 'DIA') {
