@@ -32,7 +32,7 @@ function liberarLicencaPix(unidade, product_id, contact_id) {
     .then((response) => {
       if (response.success) {
         alert('Pagamento Realizado');
-        window.location.href = document.getElementById('url_system').value;
+        window.location.href = window.atob(document.getElementById('url_system').value);
       } else {
         alert('Houve um problema entre em contato com o desenvolvedor');
         console.log(response);

@@ -158,43 +158,10 @@ function liberarLicencaCard(unidade, product_id, contact_id) {
   }).then(result => result.json()).then((response) => {
       if (response.success) {
         alert('Pagamento Realizado');
-        let location_app = atob(document.getElementById('url_system').value);
-        //se a cobrança for por tempos ele redireciona
-        if (days > 0) {
-
-          window.location.href = location_app;
-        }
-
-        //se for unidade
-          if (number_units == 1) {
-
-          let body = JSON.stringify({
-            "contact_id": contact_id,
-            "product_id": product_id
-          });
-
-          fetch(location_app + '/api/v2/webhook', {
-            body: body,
-            headers: {
-              "token": "ZmluYW5jZWlyby0wMTpDZXJ0aWZpY2FkbzEyMw==",
-              "Content-Type": "application/json"
-            },
-            method: "POST"
-          }).then(result => result.json())
-            .then((response) => {
-              console.log(response);
-              if (response.success == true) {
-                window.history.back();
-              } else {
-                this.toastr.error(response.message);
-                console.log(response);
-              }
-
-            });
-
-
-        }
-      } else {
+        let location_app = window.atob(document.getElementById('url_system').value);
+        //se a cobrança for por tempos ele redirecion
+        window.location.href = location_app;
+      }else{
         alert('Houve um problema entre em contato com o desenvolvedor');
         habilitarButtonPagamento();
         console.log(response);
