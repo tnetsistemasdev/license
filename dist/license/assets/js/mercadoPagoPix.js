@@ -1,7 +1,7 @@
 function liberarLicencaPix(unidade, product_id, contact_id) {
   let api_host_gestor = document.getElementById('api_host').value;
   let days = 0;
-  if (unidade == 'UNID' || unidade == 'DIA') {
+  if (unidade == 'UNID' || unidade == 'DIAS') {
     days = 1;
   } else if (unidade == 'SEMANA') {
     days = 7;

@@ -126,7 +126,7 @@ function liberarLicencaCard(unidade, product_id, contact_id) {
   let api_host_gestor = document.getElementById('api_host').value;
   let days = 0;
   let number_units = 0;
-  if (unidade == 'DIA') {
+  if (unidade == 'DIAS') {
     days = 1;
   } else if (unidade == 'SEMANA') {
     days = 7;
@@ -195,7 +195,7 @@ function liberarLicencaCard(unidade, product_id, contact_id) {
 
         }
       } else {
-        alert(response.message);
+        alert('Houve um problema entre em contato com o desenvolvedor');
         habilitarButtonPagamento();
         console.log(response);
       }
